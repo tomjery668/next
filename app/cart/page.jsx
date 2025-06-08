@@ -10,6 +10,18 @@ const Cart = () => {
 
   const { products, router, cartItems, addToCart, updateCartQuantity, getCartCount } = useAppContext();
 
+  // Add loading check
+  if (!cartItems) {
+    return (
+      <>
+        <Navbar />
+        <div className="flex justify-center items-center h-64">
+          <p>Loading cart...</p>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <Navbar />
@@ -40,8 +52,8 @@ const Cart = () => {
                 </tr>
               </thead>
               <tbody>
-                {Object.keys(cartItems).map((itemId) => {
-                  const product = products.find(product => product._id === itemId);
+                {Object.keys(cartItems || {}).map((itemId) => {
+                  const product = products?.find(product => product._id === itemId);
 
                   if (!product || cartItems[itemId] <= 0) return null;
 
