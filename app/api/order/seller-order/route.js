@@ -2,21 +2,17 @@ import connectDB from "@/config/db";
 import authSeller from "@/lib/authSeller";
 import Address from "@/models/Address";
 import Order from "@/models/order";
-import { getAuth } from "@clerk/nextjs/dist/types/server";
+import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-
-
 
 export async function GET(request) {
     try {
-        const { userId } = getAuth(request)
+        const { userId } = auth()
 
         const isSeller = await authSeller(userId)
 
         if (!isSeller) {
             return NextResponse.json({ success: false, message: 'not authorized' })
-
-            
         }
 
         await connectDB()
@@ -29,7 +25,5 @@ export async function GET(request) {
         
     } catch (error) {
         return NextResponse.json({ success: false, message: error.message })
-        
     }
-    
 }
