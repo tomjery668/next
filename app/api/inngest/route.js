@@ -1,4 +1,6 @@
 import { serve } from "inngest/next";
+import Order from "@/models/order";
+
 import { createUserOrder, inngest, syncUserCreation, syncUserDeletion, syncUserUpdation } from "@/config/inngest";
 
 // Create an API that serves zero functions
